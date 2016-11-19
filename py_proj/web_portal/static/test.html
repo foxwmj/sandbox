@@ -1,0 +1,178 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        <link rel="stylesheet" href="static/simple-demo.css" rel="stylesheet" />
+        
+        <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="static/jquery.form.js"></script> 
+        <script src="static/dmupload.js"></script> 
+        
+        <meta charset=utf-8 />
+
+        <title>Test</title>
+
+        <script type="text/javascript" charset="utf-8">
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah')
+                            .attr('src', e.target.result)
+                            .width(350)
+                            .height(400);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function SubForm(){
+                S4();
+            }
+ 
+            function S1(){
+                $.post('/pic', $('#myForm').formSerialize());
+            }
+
+            function S2() {
+                $.ajax({
+                    url:'/pic',
+                    type:'post',
+                    data:$('#myFormId').formSerialize(),
+                    success:function(){
+                        alert("worked");
+                    }
+                });
+            }
+
+            function S3(){
+                var formData = new FormData($('#myForm'));
+                $.ajax({
+                    url: '/pic',  //Server script to process data
+                    type: 'POST',
+                    /*xhr: function() {  // Custom XMLHttpRequest
+                        var myXhr = $.ajaxSettings.xhr();
+                        if(myXhr.upload){ // Check if upload property exists
+                            myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
+                        }
+                        return myXhr;
+                    },*/
+                    //Ajax events
+                    //beforeSend: beforeSendHandler,
+                    //success: completeHandler,
+                    //error: errorHandler,
+                    // Form data
+                    data: formData,
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    //contentType: false,
+                    //processData: false
+                });
+            }
+            
+            function S4(){
+
+                 $('#drag-and-drop-zone').dmUploader({
+                        url: '/pic2',
+                        dataType: 'json',
+                        allowedTypes: 'image/*',
+                        /*extFilter: 'jpg;png;gif',*/
+                        /*
+                        onInit: function(){
+                          add_log('Penguin initialized :)');
+                        },
+                        onBeforeUpload: function(id){
+                          add_log('Starting the upload of #' + id);
+                          
+                          update_file_status(id, 'uploading', 'Uploading...');
+                        },
+                        onNewFile: function(id, file){
+                          add_log('New file added to queue #' + id);
+                          
+                          add_file(id, file);
+                        },
+                        onComplete: function(){
+                          add_log('All pending tranfers finished');
+                        },
+                        onUploadProgress: function(id, percent){
+                          var percentStr = percent + '%';
+                          update_file_progress(id, percentStr);
+                        },
+                        onUploadSuccess: function(id, data){
+                          add_log('Upload of file #' + id + ' completed');
+                          
+                          add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+                          
+                          update_file_status(id, 'success', 'Upload Complete');
+                          
+                          update_file_progress(id, '100%');
+                        },
+                        onUploadError: function(id, message){
+                          add_log('Failed to Upload file #' + id + ': ' + message);
+                          
+                          update_file_status(id, 'error', message);
+                        },
+                        onFileTypeError: function(file){
+                          add_log('File \'' + file.name + '\' cannot be added: must be an image');
+                          
+                        },
+                        onFileSizeError: function(file){
+                          add_log('File \'' + file.name + '\' cannot be added: size excess limit');
+                        },
+                        /*onFileExtError: function(file){
+                          $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' has a Not Allowed Extension');
+                        },
+                        onFallbackMode: function(message){
+                          alert('Browser not supported(do something else here!): ' + message);
+                        }*/
+                      });
+            }
+
+
+
+        </script>
+
+    </head>
+    <body>
+        <div id="box_frame">
+            <!--
+            <div id="drag-and-drop-zone" class="uploader">
+                <div>Drag &amp; Drop Images Here</div>
+                <div class="or">-or-</div>
+                <div class="browser">
+                    <label>
+                        <span>Click to open the file Browser</span>
+                        <input type="file" name="files[]" multiple="multiple" title='Click to add Files'>
+                    </label>
+                </div>
+            </div>
+            -->
+            
+            <div id="input">
+                <!--<form name="myForm" id="myForm">-->
+                <form action="/pic" method="post" enctype="multipart/form-data">
+                    
+                    <div id="box_input">
+                        <div id="pic">
+                            <input type='file' name='file' onchange="readURL(this);" />
+                            <img id="blah" src="#" alt="your image" />
+                        </div>
+                        <div id="title">
+                            <label for="Main Title">Main Title</label><input type="text/submit/hidden/button" name="Main_Title" value="" id="Main Title"><br/>
+                            <label for="Sub Title">Sub Title</label><input type="text/submit/hidden/button" name="Sub_Title" value="" id="Sub Title"><br/>
+                        </div>
+                    </div>
+                    <input type="submit" value="Composite Image" name="submit" onclick="SubForm()">
+                </form>
+            </div>
+            <div id="box_option_button">
+
+            </div>
+            <div id="box_output">
+
+            </div>
+        </div>
+    </body>
+</html>

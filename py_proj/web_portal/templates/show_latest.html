@@ -1,0 +1,29 @@
+{% extends "resume_layout.html" %}
+{% block body %}
+  <ul class=entries>
+  {% for entry in entries %}
+  <li><h2><a href="{{ entry.link }}">{{ entry.name|safe}}</a></h2><br>
+  <span class="key">Time:</span>
+  <span class="value">{{ entry.time|safe }}</span><br>
+
+  <span class="key">Last Job:</span>
+  <span class="value">{{ entry.lastJob|safe }}</span><br>
+
+  <span class="key">Job Desc:</span>
+  <span class="value">{{ entry.jobDesc|safe }}</span><br>
+
+  <span class="key">School:</span>
+  <span class="value">{{ entry.school|safe }}</span><br>
+
+  <span class="key">Work Years:</span>
+  <span class="value">{{ entry.workYears|safe }}</span><br>
+
+  <span class="key">{{ entry.dbInsertTime|safe }}</span><br><br>
+
+  {{ entry.resume|safe }}
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
+
