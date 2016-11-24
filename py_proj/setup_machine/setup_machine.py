@@ -1,6 +1,6 @@
 import os
 import csv
-from fabric.api import run, settings, env
+from fabric.api import run, settings, env, sudo
 
 
 def read_machine_spec_file(filename):
@@ -19,7 +19,29 @@ def config_machine():
     env.user = d["user"]
     env.key_filename = d["key_filename"]
 
+# Setup 1
 def do_setup_machine():
     config_machine()
-    run('ls -A')
-    #run('dir')
+
+    sudo("apt list --installed")
+    sudo("apt-get install tree")
+    sudo("apt-get install python2.7")
+    sudo("apt-get install python-pip")
+    sudo("pip install --upgrade pip")
+
+# Setup 2
+def setup_python_must_have():
+    config_machine()
+
+    sudo("pip install virtualenv")
+    sudo("pip install Flask")
+    sudo("pip install numpy")
+    sudo("pip install pandas")
+
+# Setup 3
+def setup_sandbox():
+    config_machine()
+
+    sudo("mkdir -m 0700 ~/00_deployment")
+    run("mkdir -m 0700 ~/01_sandbox")
+    
