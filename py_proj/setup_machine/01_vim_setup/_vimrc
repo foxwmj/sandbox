@@ -32,6 +32,7 @@ let s:TC_PROJECTS_PATH = s:CODE_DIR . s:PATH_DIVISOR . "tc"
 let s:WMJ_PY_PATH = s:PY_PROJECTS_PATH . s:PATH_DIVISOR . "wmj.py"
 
 
+
 "==============================================
 " Winodws Default Setting
 "==============================================
@@ -72,38 +73,92 @@ endif
 
 
 "==============================================
-" Bundle
+" Vundle
 "==============================================
+"
+" 1)Installation requires Git and triggers git clone
+" 2)Curl is required for search.
+" 3)Set up Vundle: 
+"       WIN> **NO NEED any more**
+"       LINUX> $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" 4)Configure Plugins
+"
+"------------------
+" Path Setup
+"-----------------
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"set rtp+=d:\00_MJ_CODE\01_github_sandbox\py_proj\setup_machine\01_vim_setup\Vundle.vim.for.init
+set rtp+=d:\00_MJ_CODE\01_github_sandbox\py_proj\setup_machine\01_vim_setup\vundle_runtime_new\Vundle.vim
+call vundle#begin("d:\\00_MJ_CODE\\01_github_sandbox\\py_proj\\setup_machine\\01_vim_setup\\vundle_runtime_new")
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/vundle.vim'
 
 " My Bundles here:
 " ----------------
-Bundle 'taglist.vim'
-Bundle 'a.vim'
-Bundle 'molokai'
-Bundle 'The-NERD-tree'
-Bundle 'snipMate'
+Plugin 'taglist.vim'
+Plugin 'a.vim'
+Plugin 'molokai'
+Plugin 'The-NERD-tree'
+Plugin 'snipMate'
 "Bundle 'minibufexplorerpp'
 "Bundle 'AutoComplPop'
-Bundle 'OmniCppComplete'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+Plugin 'OmniCppComplete'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
 "Bundle 'Syntastic'
 "Bundle 'VimPdb'
-Bundle 'Tagbar'
+Plugin 'Tagbar'
+
+"Also add PEP8 checking with this nifty little plugin:
+"Plugin 'nvie/vim-flake8'
+"let python_highlight_all=1
 
 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-filetype plugin indent on     " required! 
-
+"---------------------
+"      DOCS
+"--------------------
+"
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+"
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+"
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+"
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+"
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+"Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 
 "==============================================
@@ -1269,3 +1324,5 @@ translate()
 
 EOF
 endfunction
+
+
