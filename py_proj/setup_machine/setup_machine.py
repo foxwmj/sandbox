@@ -14,7 +14,8 @@ def read_machine_spec_file(filename):
 
 def config_machine():
     '''config machine info'''
-    d = read_machine_spec_file("D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    #d = read_machine_spec_file("D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    d = read_machine_spec_file(r"D:\00_MJ_CODE\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
     env.host_string = d["host_string"]
     env.user = d["user"]
     env.key_filename = d["key_filename"]
@@ -44,4 +45,20 @@ def setup_sandbox():
 
     sudo("mkdir -m 0700 ~/00_deployment")
     run("mkdir -m 0700 ~/01_sandbox")
+
+def setup_foxconfig():
+    config_machine()
+    with settings(warn_only=True):
+        run(r'[ ! -d ~/foxconfig.git ] && git clone --bare https://github.com/foxwmj/foxconfig.git ~/foxconfig.git')
+
+    G = 'git --git-dir=$HOME/foxconfig.git --work-tree=$HOME '
+    run(G + "pull")
+    run(G + "status -s -uno") # review changelist
+    run(G + "checkout -b original_files")
+    run(G + "commit -a -m 'original files'")
+    run(G + "checkout master")
+
+    #https://github.com/foxwmj/foxconfig.git
+
+
     
