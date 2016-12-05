@@ -1,4 +1,5 @@
 #coding=utf-8
+from conf import *
 import os
 from myLog import log
 from subprocess import call
@@ -12,24 +13,9 @@ def composeStyle_0(imagePath, mainTitle, subTitle):
     log.info("----"+mainTitle)
     log.info("----"+subTitle)
 
-    call(["magick", "-l"])
-    #magick convert logo.png -pointsize 40 -weight 40 -font PingFang.ttc -draw "gravity north fill orange text 100,100 '长江商学院'" res.png
-
-
-    
-    
-
-
-
+    text2img(mainTitle)
     res="out.png"
     return res
-
-
-
-
-
-
-
 
 #Color Names
 #The ImageColor module supports the following string formats:
@@ -40,8 +26,8 @@ def composeStyle_0(imagePath, mainTitle, subTitle):
 #Common HTML color names. The ImageColor module provides some 140 standard color names, based on the colors supported by the X Window system and most web browsers. color names are case insensitive. For example, red and Red both specify pure red.
 #
 
-def text2img(text, font="simsun.ttc", font_color="Black", font_size=36):
-    font = ImageFont.truetype(font, font_size, 5)
+def text2img(text, font="simsun.ttc", font_color="Black", font_size=36, font_face=0):
+    font = ImageFont.truetype(font, font_size, font_face)
     #多行文字处理
     text = text[:-1].split('\n')
     print text
@@ -127,9 +113,35 @@ def draw_text_on_img(img, text, x, y, font="simsun.ttc", font_color="Black", fon
 #@font-face{font-family:"PingFang-SC";font-weight:700;src:local("PingFang SC Semibold")}
 #@font-face{font-family:"PingFang-SC";font-weight:800;src:local("PingFang SC Heavy")}
 
+def composeStyle_0(imagePath, mainTitle, subTitle):
+    log.info("Enter composeStyle_0")
+    log.info("----"+imagePath)
+    log.info("----"+mainTitle)
+    log.info("----"+subTitle)
 
-def composite(img0, text0, out, font, font_color, font_size, font_face, position):
-    pass
+    res="out.png"
+
+    composite(imagePath, mainTitle, res)
+
+    return res
+
+
+def composite(img_path, text, out_path, font="PingFant.ttc", font_color="white", font_size=36, font_face=0, position="center"):
+
+    font = os.path.join(FONT_ABS_FOLDER, font)
+
+    im = Image.open(img_path)
+    mark = text2img(text, font, font_color, font_size, font_face) 
+
+    (x,y)= calc_offset(im, mark, position)
+    image = draw_text_on_img(im, text, x, y, font, font_color, font_size, font_face)
+
+    if image:
+        image.save(out_path)
+        #image.show()
+    else:
+        log.error("Image save failed")
+
 
 def main():
     P = r"C:\Users\Administrator\code_projs\PY_projs\web_portal\tmp"
@@ -141,7 +153,6 @@ def main():
 
     out = os.path.join(P, "out.png")
 
-    #text = u'Linsir.水印.\nvi5i0n@hotmail.com'
     text = open(t1).read().decode('utf-8')
     # print text
     im = Image.open(p1)
@@ -154,7 +165,7 @@ def main():
         image.save(out)
         image.show()
     else:
-        print "Sorry, Failed."
+        log.error("Image save failed")
 
 if __name__ == '__main__':
     main()

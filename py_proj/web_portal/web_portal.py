@@ -15,12 +15,13 @@ import datetime
 import myLog
 log = None
 
-try:
-    # this is how you would normally import
-    from flask.ext.cors import *
-except:
-    # support local usage without installed package
-    from flask_cors import *
+#try:
+#    # this is how you would normally import
+#    from flask.ext.cors import *
+#except:
+#    # support local usage without installed package
+#    from flask_cors import *
+from flask_cors import *
 
 import json
 from collections import namedtuple
@@ -302,4 +303,4 @@ if __name__ == '__main__':
     #handler = logging.FileHandler(os.path.join(app.root_path, 'access.log'))
     #log.addHandler(handler)
 
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1', port=5000, debug=True)
