@@ -6,7 +6,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import os
+from conf import *
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash, _app_ctx_stack, send_from_directory 
@@ -54,7 +54,6 @@ app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 #            WEB PORTAL Begin
 #
 #====================================================
-from conf import COMPOSITED_FOLDER as out_folder
 
 @app.route('/test')
 def test():
@@ -110,13 +109,15 @@ def pic():
             log.info("5 normal path!")
 
             filename = secure_filename(file.filename)
-            filePath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            filePath = os.path.join(UPLOAD_ABS_FOLDER, filename)
             file.save(filePath)
 
-            outFilePath = image_process.composeStyle_0(filePath, request.form['Main_Title'], request.form["Sub_Title"])
+            outFileName = makeTempFileName()+".png"
+            log.info(outFileName)
+            outFilePath = image_process.composeStyle_0(filePath, request.form['Main_Title'], request.form["Sub_Title"], outFileName)
 
-            #return "OK"
-            return redirect(url_for("composited", name=outFilePath))
+            return redirect(url_for("composited", name=outFileName))
+            #return redirect(url_for("composited", name="out.png"))
 
     log.error("6")
 

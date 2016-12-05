@@ -1,0 +1,5 @@
+/composited
+/tmp
+/upload_temp
+*.log
+*.pyc

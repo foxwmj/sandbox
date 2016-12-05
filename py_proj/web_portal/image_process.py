@@ -7,15 +7,6 @@ from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 
 
 
-def composeStyle_0(imagePath, mainTitle, subTitle):
-    log.info("Enter composeStyle_0")
-    log.info("----"+imagePath)
-    log.info("----"+mainTitle)
-    log.info("----"+subTitle)
-
-    text2img(mainTitle)
-    res="out.png"
-    return res
 
 #Color Names
 #The ImageColor module supports the following string formats:
@@ -113,28 +104,29 @@ def draw_text_on_img(img, text, x, y, font="simsun.ttc", font_color="Black", fon
 #@font-face{font-family:"PingFang-SC";font-weight:700;src:local("PingFang SC Semibold")}
 #@font-face{font-family:"PingFang-SC";font-weight:800;src:local("PingFang SC Heavy")}
 
-def composeStyle_0(imagePath, mainTitle, subTitle):
+def composeStyle_0(imagePath, mainTitle, subTitle, outPath):
     log.info("Enter composeStyle_0")
     log.info("----"+imagePath)
     log.info("----"+mainTitle)
     log.info("----"+subTitle)
 
-    res="out.png"
-
-    composite(imagePath, mainTitle, res)
-
-    return res
+    outPath = os.path.join(COMPOSITED_ABS_FOLDER, outPath)
+    composite(imagePath, mainTitle, outPath)
 
 
-def composite(img_path, text, out_path, font="PingFant.ttc", font_color="white", font_size=36, font_face=0, position="center"):
+def composite(img_path, text, out_path, font="PingFang.ttc", font_color="white", font_size=36, font_face=0, position="center"):
+    log.info("Enter")
 
     font = os.path.join(FONT_ABS_FOLDER, font)
+    log.error(font)
 
     im = Image.open(img_path)
     mark = text2img(text, font, font_color, font_size, font_face) 
 
     (x,y)= calc_offset(im, mark, position)
     image = draw_text_on_img(im, text, x, y, font, font_color, font_size, font_face)
+    log.info(out_path)
+    log.info(image)
 
     if image:
         image.save(out_path)
