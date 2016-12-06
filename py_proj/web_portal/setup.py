@@ -10,10 +10,11 @@ def main():
         source venv/bin/activate;
         pip install -r requirements.txt;
 
-
     """ % (ROOT_ABS_FOLDER,)
+
+    print cmd
+
     call([cmd], shell=True)
-    pass
 
 if __name__ == "__main__":
     main()
