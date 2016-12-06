@@ -1,5 +1,6 @@
 /composited
 /tmp
 /upload_temp
+/venv
 *.log
 *.pyc

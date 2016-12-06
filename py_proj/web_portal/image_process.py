@@ -20,7 +20,9 @@ from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 def text2img(text, font="simsun.ttc", font_color="Black", font_size=36, font_face=0):
     font = ImageFont.truetype(font, font_size, font_face)
     #多行文字处理
-    text = text[:-1].split('\n')
+    if text[-1] == '\n':
+        text = text[:-1]
+    text = text.split('\n')
     print text
     mark_width = 0
     for  i in range(len(text)):
@@ -77,7 +79,9 @@ def draw_text_on_img(img, text, x, y, font="simsun.ttc", font_color="Black", fon
     """在图片上加入文字"""
     font = ImageFont.truetype(font, font_size, font_face)
     #多行文字处理
-    text = text[:-1].split('\n')
+    if text[-1] == '\n':
+        text = text[:-1]
+    text = text.split('\n')
     print text
     mark_width = 0
     for  i in range(len(text)):
@@ -133,7 +137,6 @@ def composite(img_path, text, out_path, font="PingFang.ttc", font_color="white",
         #image.show()
     else:
         log.error("Image save failed")
-
 
 def main():
     P = r"C:\Users\Administrator\code_projs\PY_projs\web_portal\tmp"
