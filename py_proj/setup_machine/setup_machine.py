@@ -14,8 +14,8 @@ def read_machine_spec_file(filename):
 
 def config_machine():
     '''config machine info'''
-    #d = read_machine_spec_file("D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
-    d = read_machine_spec_file(r"D:\00_MJ_CODE\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    d = read_machine_spec_file(r"D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    #d = read_machine_spec_file(r"D:\00_MJ_CODE\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
     env.host_string = d["host_string"]
     env.user = d["user"]
     env.key_filename = d["key_filename"]
@@ -43,7 +43,7 @@ def setup_python_must_have():
 def setup_sandbox():
     config_machine()
 
-    sudo("mkdir -m 0700 ~/00_deployment")
+    run("mkdir -m 0700 ~/00_deployment")
     run("mkdir -m 0700 ~/01_sandbox")
 
 def setup_foxconfig():
@@ -59,6 +59,17 @@ def setup_foxconfig():
     run(G + "checkout master")
 
     #https://github.com/foxwmj/foxconfig.git
+
+def deploy_proj_A():
+    config_machine()
+    with settings(warn_only=True):
+        run(r'[ ! -d ~/01_sandbox/99_git_sandbox ] && git clone https://github.com/foxwmj/sandbox.git ~/01_sandbox/99_git_sandbox')
+        run(r'[ -d ~/01_sandbox/99_git_sandbox ] && cd ~/01_sandbox/99_git_sandbox && git pull && python ~/01_sandbox/99_git_sandbox/setup.py')
+
+
+
+
+
 
 
     
