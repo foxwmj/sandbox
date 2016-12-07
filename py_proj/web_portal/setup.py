@@ -4,18 +4,22 @@ from subprocess import call
 
 
 def main():
-    cmd = """
-        cd %s;
-        virtualenv --no-site-packages venv;
-        source venv/bin/activate;
-        pip install -r requirements.txt;
 
-    """ % (ROOT_ABS_FOLDER,)
+    cmd = """init:
+\tcd %s;
+\tvirtualenv --no-site-packages venv;
+\tsource %s/venv/bin/activate;
+\tinstall -r requirements.txt;
+""" % (ROOT_ABS_FOLDER, ROOT_ABS_FOLDER)
 
     print cmd
 
+    makefile = os.path.join(ROOT_ABS_FOLDER, "Makefile")
+    with open(makefile, "w") as mf:
+        mf.write(cmd)
 
-    call([cmd], shell=True)
+
+    #call([cmd], shell=True)
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 import os
 import csv
 from fabric.api import run, settings, env, sudo
+from fabric.contrib.files import exists
 
 
 def read_machine_spec_file(filename):
@@ -63,8 +64,12 @@ def setup_foxconfig():
 def deploy_proj_A():
     config_machine()
     with settings(warn_only=True):
-        run(r'[ ! -d ~/01_sandbox/99_git_sandbox ] && git clone https://github.com/foxwmj/sandbox.git ~/01_sandbox/99_git_sandbox')
-        run(r'[ -d ~/01_sandbox/99_git_sandbox ] && cd ~/01_sandbox/99_git_sandbox && git pull && python ~/01_sandbox/99_git_sandbox/setup.py')
+        work_folder = '~/01_sandbox/99_git_sandbox'
+        if exists(work_folder ,verbose=True):
+            run('clone https://github.com/foxwmj/sandbox.git %s' % (work_folder, ))
+            with cd(work_folder):
+                run('make')
+        #run(r'[ -d ~/01_sandbox/99_git_sandbox ] && cd ~/01_sandbox/99_git_sandbox && git pull && python ~/01_sandbox/99_git_sandbox/setup.py')
 
 
 
