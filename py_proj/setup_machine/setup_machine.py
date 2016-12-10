@@ -65,10 +65,11 @@ def deploy_proj_A():
     config_machine()
     with settings(warn_only=True):
         work_folder = '~/01_sandbox/99_git_sandbox'
-        if exists(work_folder ,verbose=True):
+        proj_A_folder = os.path.join(work_folder, 'py_proj/web_portal')
+        if not exists(work_folder ,verbose=True):
             run('clone https://github.com/foxwmj/sandbox.git %s' % (work_folder, ))
-            with cd(work_folder):
-                run('make')
+            with cd(proj_A_folder):
+                run('make setup')
         #run(r'[ -d ~/01_sandbox/99_git_sandbox ] && cd ~/01_sandbox/99_git_sandbox && git pull && python ~/01_sandbox/99_git_sandbox/setup.py')
 
 
