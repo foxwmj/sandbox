@@ -14,5 +14,4 @@ setup:
 
 run:
 	. $(root_dir)venv/bin/activate; \
-	$(root_dir)venv/bin/python python web_portal.py; \
-	deactivate;
+	$(root_dir)venv/bin/python web_portal.py; 
