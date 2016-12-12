@@ -15,8 +15,8 @@ def read_machine_spec_file(filename):
 
 def config_machine():
     '''config machine info'''
-    d = read_machine_spec_file(r"D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
-    #d = read_machine_spec_file(r"D:\00_MJ_CODE\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    #d = read_machine_spec_file(r"D:\sandbox\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
+    d = read_machine_spec_file(r"D:\00_MJ_CODE\99_machine_info_no_version_control\machine_spec_qcould_161123.csv")
     env.host_string = d["host_string"]
     env.user = d["user"]
     env.key_filename = d["key_filename"]
@@ -25,10 +25,13 @@ def config_machine():
 def do_setup_machine():
     config_machine()
 
+    sudo("apt-get update")
     sudo("apt list --installed")
     sudo("apt-get install tree")
     sudo("apt-get install python2.7")
     sudo("apt-get install python-pip")
+    sudo("apt-get install build-essential cmake")
+    sudo("apt-get install python-dev python3-dev")
     sudo("pip install --upgrade pip")
 
 # Setup 2
