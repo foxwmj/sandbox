@@ -8,5 +8,7 @@ REM
 REM fab -f setup_machine.py  setup_sandbox
 
 REM
-fab -f setup_machine.py setup_foxconfig 
+REM fab -f setup_machine.py setup_foxconfig 
 
+REM
+fab -f setup_machine.py install_vim8_build
